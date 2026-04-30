@@ -1,0 +1,53 @@
+# configs/s2rec_default.yaml
+# ===========================
+# Default configuration for s2rec (RecursiveS2Flow).
+#
+# Model: s2rec = RecursiveS2Flow  (Rezende et al. 2020, Appendix J)
+#   - Works in PHYSICAL (cos_theta, phi) coordinates. No normalisation.
+#   - Base distribution: UNIFORM ON S2  (log p = -log(4*pi))
+#   - Alternating coupling blocks:
+#       A-type (even k): cos_theta free-param, phi MLP on transformed cos_theta
+#       B-type (odd k):  phi free-param, cos_theta MLP on transformed phi
+#   - num_splines=2 replicates paper Appendix J: 1 A-block + 1 B-block
+#   - num_bins=80 matches paper's Ks=80
+#   - No 'bound' parameter — uses physical domains directly
+#
+# Usage:
+#   python -m hep_nsf.main --config configs/s2rec_default.yaml --data eemumu_mup.json
+
+mode: train
+model: s2rec
+
+val_frac: 0.2
+seed: 42
+
+num_bins: 80
+num_splines: 2
+# Note: no 'bound' for s2rec — physical domains (-1,1) and (0,2pi) used directly
+hidden_dim: 64
+num_layers: 2
+arch: mlp
+activation: relu
+dropout: 0.0
+
+lr: 0.001
+weight_decay: 0.0
+batch_size: 8192
+epochs: 10000
+patience: 20
+ema_alpha: 0.3
+clip_grad: 5.0
+use_plateau: true
+plateau_factor: 0.5
+plateau_patience: 10
+use_cosine: false
+cosine_t_max: 500
+log_every: 10
+
+run_name: s2rec_flow
+save_dir: checkpoints
+output_dir: outputs
+
+num_samples: 10000
+target_r: 500.0
+device: auto

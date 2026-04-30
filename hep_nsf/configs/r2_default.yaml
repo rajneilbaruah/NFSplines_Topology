@@ -1,0 +1,48 @@
+# configs/r2_default.yaml
+# ========================
+# Default configuration for r2 (AngularSphereFlow).
+#
+# Model: r2 = AngularSphereFlow
+#   - Works in STANDARDISED (cos_theta, phi) coordinates
+#   - Base distribution: STANDARD GAUSSIAN in R2
+#   - Both dimensions: MLP-conditioned standard RQS
+#
+# Usage:
+#   python -m hep_nsf.main --config configs/r2_default.yaml --data eemumu_mup.json
+
+mode: train
+model: r2
+
+val_frac: 0.2
+seed: 42
+
+num_bins: 32
+num_splines: 1
+bound: 5.0
+hidden_dim: 64
+num_layers: 2
+arch: mlp
+activation: relu
+dropout: 0.0
+
+lr: 0.001
+weight_decay: 0.0
+batch_size: 8192
+epochs: 10000
+patience: 20
+ema_alpha: 0.3
+clip_grad: 5.0
+use_plateau: true
+plateau_factor: 0.5
+plateau_patience: 10
+use_cosine: false
+cosine_t_max: 500
+log_every: 10
+
+run_name: r2_flow
+save_dir: checkpoints
+output_dir: outputs
+
+num_samples: 10000
+target_r: 500.0
+device: auto

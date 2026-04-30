@@ -1,0 +1,51 @@
+# configs/s2_default.yaml
+# ========================
+# Default configuration for the 2-D angular (S²) flow.
+# Override any value on the command line.
+#
+# Usage:
+#   python main.py --config configs/s2_default.yaml --data eemumu_mup.json
+
+mode: train
+model: s2
+
+# Data
+val_frac: 0.2
+seed: 42
+
+# Model architecture
+num_bins: 32
+num_splines: 1       # <-- change to 2, 3, ... for more expressiveness
+bound: 5.0
+hidden_dim: 64
+num_layers: 2
+arch: mlp
+activation: relu
+dropout: 0.0
+
+# Training
+lr: 0.001
+weight_decay: 0.0
+batch_size: 8192
+epochs: 10000
+patience: 20
+ema_alpha: 0.3
+clip_grad: 5.0
+use_plateau: true
+plateau_factor: 0.5
+plateau_patience: 10
+use_cosine: false
+cosine_t_max: 500
+log_every: 10
+
+# I/O
+run_name: s2_flow
+save_dir: checkpoints
+output_dir: outputs
+
+# Sampling / evaluation
+num_samples: 10000
+target_r: 500.0
+
+# Device
+device: auto
