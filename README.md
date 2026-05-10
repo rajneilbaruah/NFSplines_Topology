@@ -303,7 +303,7 @@ Shipped configs:
 
 ---
 
-## Cluster Usage (SLURM)
+## Cluster Usage (SLURM) (EXPERIMENTAL)
 
 ```bash
 #!/bin/bash
